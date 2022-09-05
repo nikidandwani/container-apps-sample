@@ -84,7 +84,7 @@ jobs:
       - name: Output image tag
         id: image-tag
         run: |
-          echo ::set-output name=image-${{ matrix.services.appName }}::${{ env.REGISTRY }}/$GITHUB_REPOSITORY/${{ matrix.services.appName }}:sha-${{ needs.set-env.outputs.version }} | tr '[:upper:]' '[:lower:]'
+          echo ::set-output name=image-${{ matrix.services.appName }}::${{ env.REGISTRY }}/${{ needs.set-env.outputs.repository }}/${{ matrix.services.appName }}:sha-${{ needs.set-env.outputs.version }} | tr '[:upper:]' '[:lower:]'
 
   deploy:
     if: github.repository != 'Azure-samples/container-apps-store-api-microservice'
