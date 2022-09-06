@@ -26,6 +26,13 @@ param containerRegistryPassword string = ''
 param registryPassword string = 'registry-password'
 
 
+// User assigned Managed Identity
+resource uaidentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' = {
+  name: 'sample-container-apps-identity'
+  location: 'westeurope'
+}
+
+
 // Container Apps Environment 
 module environment 'environment.bicep' = {
   name: '${deployment().name}--environment'
@@ -84,6 +91,7 @@ module pythonService 'container-http.bicep' = {
         value: containerRegistryPassword
       }
     ]
+    containerAppUserAssignedResourceId : uaidentity.id
   }
 }
 
@@ -96,10 +104,10 @@ resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@20
     componentType: 'state.azure.cosmosdb'
     version: 'v1'
     secrets: [
-      {
-        name: 'masterkey'
-        value: cosmosdb.outputs.primaryMasterKey
-      }
+      // {
+      //   name: 'masterkey'
+      //   value: cosmosdb.outputs.primaryMasterKey
+      // }
     ]
     metadata: [
       {
@@ -114,9 +122,13 @@ resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@20
         name: 'collection'
         value: 'orders'
       }
+      // {
+      //   name: 'masterkey'
+      //   secretRef: 'masterkey'
+      // }
       {
-        name: 'masterkey'
-        secretRef: 'masterkey'
+        name: 'azureClientId'
+        value: uaidentity.properties.clientId
       }
     ]
     scopes: [
@@ -151,6 +163,7 @@ module goService 'container-http.bicep' = {
         value: containerRegistryPassword
       }
     ] : []
+    containerAppUserAssignedResourceId : uaidentity.id
   }
 }
 
@@ -191,6 +204,7 @@ module nodeService 'container-http.bicep' = {
         value: containerRegistryPassword
       }
     ]
+    containerAppUserAssignedResourceId : uaidentity.id
   }
 }
 

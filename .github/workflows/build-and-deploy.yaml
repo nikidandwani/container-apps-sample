@@ -103,7 +103,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az group create -g ${{ secrets.RESOURCE_GROUP }} -l canadacentral
+            az group create -g ${{ secrets.RESOURCE_GROUP }} -l westeurope
             echo 'hello!!!!!!!!!!!!'
             echo nodeImage===${{ needs.package-services.outputs.containerImage-node }}
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/main.bicep \

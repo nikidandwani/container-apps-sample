@@ -13,6 +13,7 @@ param minReplicas int = 0
 param secrets array = []
 param env array = []
 param revisionMode string = 'Single'
+param containerAppUserAssignedResourceId string
 
 
 resource environment 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
@@ -22,6 +23,12 @@ resource environment 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
 resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
   name: containerAppName
   location: location
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${containerAppUserAssignedResourceId}': {}
+    }
+  }
   properties: {
     managedEnvironmentId: environment.id
     configuration: {
