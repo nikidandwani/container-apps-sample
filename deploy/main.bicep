@@ -104,10 +104,10 @@ resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@20
     componentType: 'state.azure.cosmosdb'
     version: 'v1'
     secrets: [
-      // {
-      //   name: 'masterkey'
-      //   value: cosmosdb.outputs.primaryMasterKey
-      // }
+      {
+        name: 'masterkey'
+        value: cosmosdb.outputs.primaryMasterKey
+      }
     ]
     metadata: [
       {
@@ -122,14 +122,14 @@ resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@20
         name: 'collection'
         value: 'orders'
       }
-      // {
-      //   name: 'masterkey'
-      //   secretRef: 'masterkey'
-      // }
       {
-        name: 'azureClientId'
-        value: uaidentity.properties.clientId
+        name: 'masterkey'
+        secretRef: 'masterkey'
       }
+      // {
+      //   name: 'azureClientId'
+      //   value: uaidentity.properties.clientId
+      // }
     ]
     scopes: [
       pythonServiceAppName
