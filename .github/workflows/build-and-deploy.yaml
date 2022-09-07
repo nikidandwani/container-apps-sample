@@ -108,7 +108,7 @@ jobs:
             echo nodeImage===${{ needs.package-services.outputs.containerImage-node }}
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/main.bicep \
              -p \
-                minReplicas=0 \
+                minReplicas=1 \
                 nodeImage='${{ needs.package-services.outputs.containerImage-node }}' \
                 nodePort=3000 \
                 pythonImage='${{ needs.package-services.outputs.containerImage-python }}' \
