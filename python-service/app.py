@@ -6,7 +6,7 @@ from flask import json
 from flask_cors import CORS
 from dapr.clients import DaprClient
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 app = flask.Flask(__name__)
 CORS(app)
