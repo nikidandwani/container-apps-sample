@@ -105,7 +105,7 @@ resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@20
     version: 'v1'
     secrets: [
       {
-        name: 'masterkey'
+        name: 'masterkey1'
         value: cosmosdb.outputs.primaryMasterKey
       }
     ]
@@ -124,7 +124,7 @@ resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@20
       }
       {
         name: 'masterkey'
-        secretRef: 'masterkey'
+        secretRef: 'masterkey1'
       }
       // {
       //   name: 'azureClientId'
